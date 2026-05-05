@@ -1,30 +1,32 @@
-import { create } from 'zustand';
-import io from 'socket.io-client';
+import { create } from "zustand";
+import { io } from "socket.io-client";
 
-const socket = io('http://localhost:5002');
+// ENV se backend URL lo
+const SOCKET_URL = import.meta.env.VITE_API_URL.replace("/api", "");
 
-const useChatStore = create((set, get) => ({
+const socket = io(SOCKET_URL);
+
+const useChatStore = create((set) => ({
   messages: [],
   socket: socket,
   connected: false,
 
   initSocket: (userId, isAdmin = false) => {
-    socket.on('connect', () => {
+    socket.on("connect", () => {
       set({ connected: true });
-      if (isAdmin) {
-        // Admin logic here if needed
-      } else {
-        socket.emit('join_chat', userId);
+
+      if (!isAdmin) {
+        socket.emit("join_chat", userId);
       }
     });
 
-    socket.on('receive_message', (message) => {
+    socket.on("receive_message", (message) => {
       set((state) => ({
         messages: [...state.messages, message],
       }));
     });
 
-    socket.on('disconnect', () => {
+    socket.on("disconnect", () => {
       set({ connected: false });
     });
   },
@@ -32,7 +34,7 @@ const useChatStore = create((set, get) => ({
   setMessages: (messages) => set({ messages }),
 
   sendMessage: (customerId, sender, text) => {
-    socket.emit('send_message', { customerId, sender, text });
+    socket.emit("send_message", { customerId, sender, text });
   },
 }));
 
