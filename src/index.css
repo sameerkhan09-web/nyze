@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #00F2FF;
+  --color-primary-hover: #00D1DB;
+  --color-secondary: #BC13FE;
+  --color-secondary-hover: #9D11D4;
+  --color-cyber-black: #020617;
+  --color-cyber-dark: #0F172A;
+  --color-cyber-light: #1E293B;
+  
+  --shadow-glass: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  --shadow-neon-cyan: 0 0 10px rgba(0, 242, 255, 0.3), 0 0 20px rgba(0, 242, 255, 0.1);
+  --shadow-neon-purple: 0 0 10px rgba(188, 19, 254, 0.3), 0 0 20px rgba(188, 19, 254, 0.1);
+}
+
+@layer base {
+  body {
+    @apply bg-cyber-black text-slate-100 antialiased overflow-x-hidden;
+    background-image: radial-gradient(circle at top right, rgba(188, 19, 254, 0.05), transparent 40%),
+                      radial-gradient(circle at bottom left, rgba(0, 242, 255, 0.05), transparent 40%);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight font-bold;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-glass rounded-3xl transition-all duration-300;
+  }
+
+  .neon-button-primary {
+    @apply bg-primary/10 text-primary border border-primary/50 px-6 py-3 rounded-2xl font-bold 
+           hover:bg-primary hover:text-black hover:shadow-[0_0_20px_rgba(0,242,255,0.5)] 
+           active:scale-95 transition-all duration-300 flex items-center justify-center gap-2;
+  }
+
+  .neon-button-secondary {
+    @apply bg-secondary/10 text-secondary border border-secondary/50 px-6 py-3 rounded-2xl font-bold 
+           hover:bg-secondary hover:text-white hover:shadow-[0_0_20px_rgba(188,19,254,0.5)] 
+           active:scale-95 transition-all duration-300 flex items-center justify-center gap-2;
+  }
+
+  .neon-input {
+    @apply bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none 
+           focus:border-primary/50 focus:bg-white/10 focus:shadow-[0_0_15px_rgba(0,242,255,0.1)] 
+           transition-all duration-300 text-slate-100 placeholder:text-slate-500;
+  }
+
+  .cyber-grid {
+    background-size: 50px 50px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  }
+
+  .neon-text-glow {
+    text-shadow: 0 0 10px currentColor;
+  }
+  
+  .bg-neon-gradient {
+    background-image: linear-gradient(90deg, #00F2FF 0%, #BC13FE 100%);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-cyber-black;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full hover:bg-primary/50 transition-colors;
+}
