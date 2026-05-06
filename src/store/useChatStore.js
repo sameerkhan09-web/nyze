@@ -2,7 +2,8 @@ import { create } from "zustand";
 import { io } from "socket.io-client";
 
 // ENV se backend URL lo
-const SOCKET_URL = import.meta.env.VITE_API_URL.replace("/api", "");
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5002/api";
+const SOCKET_URL = API_URL.replace("/api", "");
 
 const socket = io(SOCKET_URL);
 
